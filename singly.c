@@ -6,11 +6,15 @@ typedef struct linkedlist{
     struct linkedlist *next;
 }node;
 
+void delete_entire_list(node **head);
+void reverse_list(node **head);
+node * search(node *head,int value);
+void delete_after_element(node *head, int s);
+void insert_after_element(node *head,int s,int value);
 void delete_at_beg(node** head);
 void delete_at_end(node **head);
 void traverse(node *head);
 void insert_at_beg(node **head,int value);
-
 void insert_at_end(node **head, int value);
 
 void main()
@@ -18,31 +22,35 @@ void main()
     int value,choice,s;
     node *head = NULL;                      //creating head of linkedlist
     while(1){
-        printf("1. insert at beginning :");
-        printf("2. insert at end :");
-        printf("3. insert after element :");
-        printf("4. delete at beginning :");
-        printf("5. delete at end :");
-        printf("6. delete after element :");
-        printf("7. delete entire list :");
-        printf("8. search :");
-        printf("9. traverse:");
-        printf("10. traverse in reverse:");
-        printf("11. reverse list:");
-        printf("12. exit:");
+        printf("\n1. insert at beginning :\n");
+        printf("2. insert at end :\n");
+        printf("3. insert after element :\n");
+        printf("4. delete at beginning :\n");
+        printf("5. delete at end :\n");
+        printf("6. delete after element :\n");
+        printf("7. delete entire list :\n");
+        printf("8. search :\n");
+        printf("9. traverse:\n");
+        printf("10. traverse in reverse:\n");
+        printf("11. reverse list:\n");
+        printf("12. exit:\n");
+        printf("enter your choice: ");
+        scanf("%d",&choice);
         switch (choice)
         {
             case 1:
                 printf("enter element to insert: ");
+                scanf("%d",&value);
                 insert_at_beg(&head,value);
                 break;
             case 2:
                 printf("enter element to insert: ");
+                scanf("%d",&value);
                 insert_at_end(&head,value);
                 break;
             case 3:
                 printf("enter after which element to insert: ");
-                scanf("%d",&search);
+                scanf("%d",&s);
                 printf("enter element to insert: ");
                 scanf("%d",&value);
                 insert_after_element(head,s,value);
@@ -57,15 +65,17 @@ void main()
                 break;
             case 6:
                 printf("enter after which element to delete: ");
-                scanf("%d",&search);
+                scanf("%d",&s);
                 delete_after_element(head,s);
                 break;
             case 7:
-                printf("not defined...");
+                delete_entire_list(&head);
                 break;
             case 8:
                 printf("enter item to search: ");
-                search(head,s);
+                scanf("%d",&s);
+                node *address=search(head,s);
+                printf("%x",address);
                 break;
             case 9:
                 traverse(head);
@@ -74,7 +84,7 @@ void main()
                 printf("not defined...");
                 break;
             case 11:
-                printf("not defined...");
+                reverse_list(&head);
                 break;
             case 12:
                 exit(0);        
@@ -157,13 +167,10 @@ node* search(node *head,int value){
         if(head->info==value){
             return head;
         }
+        head=head->next;
     }
+    return NULL;
 }
-delete_after_element(node **head, int value){
-    node *temp,*loc;
-    loc=search(head,value);
-}
-
 void insert_after_element(node *head,int s,int value){
     node *temp,*loc;
     loc=search(head,s);
@@ -189,4 +196,26 @@ void delete_after_element(node *head,int s){
         loc->next=temp->next;
         free(temp);
     }
+}
+
+void reverse_list(node **head){
+    node *temp,*loc;
+    temp=*head;
+    *head=NULL;
+    while(temp!=NULL){
+        loc=temp;
+        temp=temp->next;
+        loc->next=*head;
+        *head=loc;
+    }
+}
+
+void delete_entire_list(node **head){
+    node *temp;
+    while((*head)!=NULL){
+        temp=*head;
+        *head=(*head)->next;
+        free(temp);
+    }
+    printf("list deleted\n");
 }

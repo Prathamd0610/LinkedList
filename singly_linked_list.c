@@ -174,6 +174,9 @@ node* search(node *head,int value){
 void insert_after_element(node *head,int s,int value){
     node *temp,*loc;
     loc=search(head,s);
+    if(loc==NULL){
+        printf("element not found in list...");
+    }
     temp=(node*)malloc(sizeof(node));
     temp->info=value;
     if(loc->next==NULL){

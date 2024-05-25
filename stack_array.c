@@ -16,6 +16,7 @@ int is_empty(stack);
 int main(){
     stack s;
     int c,value;
+    s.top= NIL;
     while(1){
         // clrscr();
         printf("1. push\n");
@@ -26,7 +27,7 @@ int main(){
         switch(c){
             case 1:
                 if(is_full(s)){
-                    printf("stack overflow");
+                    printf(" stack overflow\n");
                 }
                 else{
                     printf("enter value :");
@@ -37,11 +38,11 @@ int main(){
             
             case 2:
                 if(is_empty(s)){
-                    printf("stack underflow");
+                    printf(" stack underflow\n");
                 }
                 else{
                     value=pop(&s);
-                    printf("item popped from stack = %d",value);
+                    printf("\n item popped from stack = %d\n",value);
                 }
                 break;
 
@@ -55,13 +56,14 @@ int main(){
 void push(stack *s,int value){
     (s->top)++;
     s->a[s->top]=value;
-    printf("%d pushed into stack",s->a[s->top]);
+    printf("\n %d pushed into stack\n",s->a[s->top]);
 }
 
 int pop(stack *s){
     int value;
     value=s->a[s->top];
     (s->top)--;
+    return value;
 }
 
 int is_full(stack s){
